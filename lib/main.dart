@@ -86,6 +86,14 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
   Future<void> _generateDescription() async {
     if (_imageBytes == null) return;
 
+    // SnackBarで分析中メッセージを表示
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('📸 画像分析中です...しばらくお待ちください'),
+        duration: Duration(seconds: 30),
+      ),
+    );
+
     setState(() {
       _isLoading = true;
       _description = null;
@@ -100,6 +108,9 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
         body: jsonEncode({'image': base64Image}),
       );
 
+      // 分析完了したらSnackBarを閉じる
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
@@ -113,6 +124,9 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
         });
       }
     } catch (e) {
+      // エラー時もSnackBarを閉じる
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      
       setState(() {
         _description = 'エラーが発生しました: $e';
         _isLoading = false;
