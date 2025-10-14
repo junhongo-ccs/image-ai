@@ -74,7 +74,14 @@ app.post('/api/describe', async (req, res) => {
     ];
 
     console.log('🤖 Calling Gemini API...');
-    const prompt = 'この画像について詳しく日本語で説明してください。';
+    const prompt = `この画像について詳しく日本語で説明してください。
+
+以下のMarkdown形式で出力してください：
+- 見出しには ## を使用
+- 重要な部分は **太字** で強調
+- リストは - や * を使用
+- 構造化された読みやすい形式で`;
+    
     const result = await model.generateContent([prompt, ...imageParts]);
     const response = await result.response;
     const text = response.text();

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -143,20 +144,40 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
               const Center(child: CircularProgressIndicator())
             else if (_description != null)
               Card(
+                elevation: 2,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'AI生成の説明:',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          const Icon(Icons.auto_awesome, color: Colors.blue),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'AI生成の説明:',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(height: 24),
+                      MarkdownWidget(
+                        data: _description!,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        config: MarkdownConfig(
+                          configs: [
+                            const H1Config(style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                            const H2Config(style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                            const H3Config(style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            const PConfig(textStyle: TextStyle(fontSize: 16, height: 1.6)),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(_description!),
                     ],
                   ),
                 ),
