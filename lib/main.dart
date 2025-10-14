@@ -165,7 +165,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                   child: ElevatedButton.icon(
                     onPressed: _pickImage,
                     icon: const Icon(Icons.image),
-                    label: const Text('画像を選択'),
+                    label: const Text(
+                      '画像を選択',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
@@ -176,7 +179,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                   child: ElevatedButton.icon(
                     onPressed: _isMobile ? _takePhoto : null,
                     icon: const Icon(Icons.camera_alt),
-                    label: const Text('カメラ撮影'),
+                    label: const Text(
+                      'カメラ撮影',
+                      style: TextStyle(fontSize: 16),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       backgroundColor: _isMobile ? null : Colors.grey[300],
@@ -205,7 +211,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                   ? _generateDescription
                   : null,
               icon: const Icon(Icons.auto_awesome),
-              label: const Text('説明を生成'),
+              label: const Text(
+                '説明を生成',
+                style: TextStyle(fontSize: 16),
+              ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
