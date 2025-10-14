@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ['nodejs-18_x', 'flutter']
+nixPkgs = ['nodejs-18_x']
 
 [phases.install]
-cmds = ['npm install', 'flutter pub get']
+cmds = ['npm ci --prefer-offline --no-audit']
 
 [phases.build]
-cmds = ['flutter build web --release']
+cmds = ['echo "Build complete - using pre-built Flutter web"']
 
 [start]
 cmd = 'node server.js'

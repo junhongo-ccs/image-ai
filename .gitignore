@@ -48,13 +48,15 @@ app.*.map.json
 .env
 .env.local
 
-# Flutter build
-build/
+# Flutter build (except web for deployment)
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
 pubspec.lock
+
+# Do NOT ignore build/web for Railway deployment
+# build/web is needed for production
 
 # Node modules
 node_modules/
