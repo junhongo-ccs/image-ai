@@ -165,16 +165,45 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                         ],
                       ),
                       const Divider(height: 24),
-                      MarkdownWidget(
+                      MarkdownBlock(
                         data: _description!,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         config: MarkdownConfig(
                           configs: [
-                            const H1Config(style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                            const H2Config(style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                            const H3Config(style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                            const PConfig(textStyle: TextStyle(fontSize: 16, height: 1.6)),
+                            H1Config(
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            H2Config(
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            H3Config(
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            PConfig(
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                height: 1.6,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            PreConfig(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.all(16),
+                            ),
                           ],
                         ),
                       ),
