@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:markdown_widget/markdown_widget.dart';
+import 'dart:html' as html show window;
 
 void main() {
   runApp(const MyApp());
@@ -37,9 +39,40 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
   String? _description;
   bool _isLoading = false;
   final ImagePicker _picker = ImagePicker();
+  bool _isMobile = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfMobile();
+  }
+
+  void _checkIfMobile() {
+    if (kIsWeb) {
+      final userAgent = html.window.navigator.userAgent.toLowerCase();
+      setState(() {
+        _isMobile = userAgent.contains('mobile') || 
+                    userAgent.contains('android') || 
+                    userAgent.contains('iphone') ||
+                    userAgent.contains('ipad');
+      });
+    }
+  }
 
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    
+    if (image != null) {
+      final bytes = await image.readAsBytes();
+      setState(() {
+        _imageBytes = bytes;
+        _description = null;
+      });
+    }
+  }
+
+  Future<void> _takePhoto() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     
     if (image != null) {
       final bytes = await image.readAsBytes();
@@ -126,11 +159,46 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                 ),
               ),
             const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _pickImage,
-              icon: const Icon(Icons.image),
-              label: const Text('画像を選択'),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _pickImage,
+                    icon: const Icon(Icons.image),
+                    label: const Text('画像を選択'),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _isMobile ? _takePhoto : null,
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text('カメラ撮影'),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: _isMobile ? null : Colors.grey[300],
+                      foregroundColor: _isMobile ? null : Colors.grey[600],
+                    ),
+                  ),
+                ),
+              ],
             ),
+            if (!_isMobile)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  '※ カメラ撮影はモバイル端末でのみ利用可能です',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             const SizedBox(height: 8),
             ElevatedButton.icon(
               onPressed: _imageBytes != null && !_isLoading
@@ -138,6 +206,9 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                   : null,
               icon: const Icon(Icons.auto_awesome),
               label: const Text('説明を生成'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
             ),
             const SizedBox(height: 24),
             if (_isLoading)
