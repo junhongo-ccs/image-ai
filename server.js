@@ -14,6 +14,22 @@ const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+
+// Add CSP headers for Flutter web
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://unpkg.com; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: blob:; " +
+    "font-src 'self' data:; " +
+    "connect-src 'self' https://generativelanguage.googleapis.com; " +
+    "worker-src 'self' blob:;"
+  );
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'build/web')));
 
 // API endpoint for image description
