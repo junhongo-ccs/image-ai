@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AI画像説明',
+      title: '画像読み取りくん',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -124,7 +124,7 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI画像説明生成'),
+        title: const Text('📷 画像読み取りくん'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -167,7 +167,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                     icon: const Icon(Icons.image),
                     label: const Text(
                       '画像を選択',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -181,7 +184,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
                     icon: const Icon(Icons.camera_alt),
                     label: const Text(
                       'カメラ撮影',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -213,7 +219,10 @@ class _ImageDescriptionPageState extends State<ImageDescriptionPage> {
               icon: const Icon(Icons.auto_awesome),
               label: const Text(
                 '説明を生成',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 12),
