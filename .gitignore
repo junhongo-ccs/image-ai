@@ -58,6 +58,6 @@ pubspec.lock
 # Do NOT ignore build/web for Railway deployment
 # build/web is needed for production
 
-# Node modules
+# Node modules (but keep package-lock.json for Railway)
 node_modules/
-package-lock.json
+# package-lock.json is needed for npm ci on Railway
